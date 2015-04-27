@@ -24,15 +24,11 @@ class euler():
             print ans//2
         self.var = self.var + 1 # the solver has been used once more
 
-        '''
-SO initially I tried the brute force method for this problem
+        ''' Project Euler #1: Multiples of 3 and 5
+
+So initially I tried the brute force method for this problem
 ------------------------------
 # Method - 1 BRUTE FORCE
-n = int(raw_input()) # number of test cases
-N = [] # list of N's 
-for i in range(n):
-    N.append(int(raw_input()))
-    
 for x in N:
     sum = 0
     for j in range(x):  # iterate through 0 to x and sum all the multiples of 3 or 5
@@ -51,8 +47,65 @@ and your answers will be wrong. thats why the following line failed for me,
 Thats why in the actual code above I stuck with whole numbers - 3,5 and 15
         '''
 
+    #   Project Euler #2: Even Fibonacci numbers
+    # This function lists the sum of the even-valued terms of the Fibonacci series whose values do not exceed N
+    def problem2(self,list_of_N):
+        N = list_of_N # list of N's
+        n = len(N) # number of test cases
+        for x in N:
+            ans = 0
+            i = fib = 1 # fib(1)
+            j = 2 # fib(2)
+            while(fib<=x):
+                if(fib%2 == 0):
+                    ans = ans + fib
+                fib = i + j # new fib --> fib(3), fib(4) ...
+                # (i,j) becomes (2,3) (3,5) ... and so on from (1,2)
+                i = j 
+                j = fib
+            # as the first 2 elements of the series isnt included in the summation, we add 2 (as 1 is not even) to the final sum
+            print ans+2
+        self.var = self.var + 1 # the solver has been used once more
+        
+        ''' Project Euler #2: Even Fibonacci numbers
+
+So initially I tried the following method
+------------------------------
+# Method - 1 BRUTE FORCE
+for x in N:
+    ans = 0
+    i = 1
+    while(fib(i)<=x):
+        temp = fib(i) # so that we dont need to call fib twice
+        if(temp%2 == 0):
+            ans = ans + temp
+        i = i + 1
+    print ans
+------------------------------
+This didnt work for large numbers - Terminated due to timeout
+Here fib was the following function ->
+
+def fib(n):
+    # n'th fibbonaci number
+    if(n == 1):
+        return 1
+    if(n == 2):
+        return 2
+    return fib(n-1) + fib(n-2)
+
+So, yeah this wasnt clever as they called this recursive function a whole lot of times...
+        '''
+
+
+
+# =================================================================================================== END OF CLASS euler
+
+# Testing the solutions with Sample Output from HackerRank
 
 solve1 = euler() # make an object of euler class
 print "Problem 1 solution for 10,100 is =>"
 solve1.problem1([10,100]) # I get output  23, 2318
 
+solve2 = euler() # make an object of euler class
+print "Problem 1 solution for 10,100 is =>"
+solve2.problem2([10,100]) # I get output  10, 44
