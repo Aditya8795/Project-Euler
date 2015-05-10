@@ -1,3 +1,25 @@
+import math # for sqrt
+# the trial factors need go no further than sqrt{n} because, if n is divisible by some number p,
+# then n = p * q and if q were smaller than p, n would have earlier been detected as being divisible by q or a prime factor of q.
+
+# This function checks if a number is prime, very small numbers (less than a million), trial division is the best way: divide by 2, 3, 5...
+# and so on until the square root of the number. If you find a factor, the number is composite; otherwise, the number is prime.
+# Used for problem #3
+def isprime(x):
+    if(x==2 or x==3 or x==5):
+        return True
+    if(x%2==0 or x%3==0):
+        return False
+    max_possible = int(math.sqrt(x))
+    d, i = 5, 2 # i alternates as 2 then 4 then 2 then 4 and so on... while d takes on prime_sieve values - 5,7,11,13,17,19,23... 
+    while(d<=max_possible):
+        if(x%d==0):
+            return False
+        d = d + i
+        i = 6 - i # causes the i alternation
+    return True
+
+
 # contains methods used for solving the problems @https://www.hackerrank.com/contests/projecteuler/challenges
 class euler():
 
@@ -48,7 +70,7 @@ Thats why in the actual code above I stuck with whole numbers - 3,5 and 15
         '''
 
     #   Project Euler #2: Even Fibonacci numbers
-    # This function lists the sum of the even-valued terms of the Fibonacci series whose values do not exceed N
+    # This function lists the sum of the even-valued terms of the Fibonacci series whose values do not exceed the various N's
     def problem2(self,list_of_N):
         N = list_of_N # list of N's
         n = len(N) # number of test cases
@@ -96,6 +118,27 @@ def fib(n):
 So, yeah this wasnt clever as they called this recursive function a whole lot of times...
         '''
 
+    #   Project Euler #3: Largest prime factor
+    # This function prints the largest prime factor of the N's
+    def problem3(self,list_of_N):
+        N = list_of_N # list of N's
+        n = len(N) # number of test cases
+        for x in N:
+            latest_prime = 0
+            for i in range(x,1,-1): # consider all numbers from x to 2
+                if(x%i==0): # check if its a factor of x
+                    if(isprime(i)): # check if its prime
+                        latest_prime = i
+                        break # the first answer we find is the answer
+            print latest_prime
+
+                
+''' PROBLEM UNSOLVED 
+Method - 1 BRUTE FORCE 
+
+I am facing Runtime error
+
+'''
 
 
 # =================================================================================================== END OF CLASS euler
@@ -107,5 +150,9 @@ print "Problem 1 solution for 10,100 is =>"
 solve1.problem1([10,100]) # I get output  23, 2318
 
 solve2 = euler() # make an object of euler class
-print "Problem 1 solution for 10,100 is =>"
+print "Problem 2 solution for 10,100 is =>"
 solve2.problem2([10,100]) # I get output  10, 44
+
+solve3 = euler() # make an object of euler class
+print "Problem 3 solution for 10,17 is =>"
+solve3.problem3([10,17]) # I get output  5, 17
