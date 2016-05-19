@@ -146,6 +146,69 @@ class euler():
 
 		'''
 
+	#   Project Euler #28: Number spiral diagonals
+	# This function prints the sum of the diagonal elements for a N*N spiral.
+	# The spiral is drawn starting with 1 then to the right clockwise.
+	def problem28(self,list_of_N):
+		N = list_of_N # list of N's
+		n = len(N) # number of test cases
+		for i in N:
+			r = i//2
+			print(round(4*r + (2.66666666667)*r*(r+1)*(2*r+1) - 8*r*(r+1) + 10*r*(r+1))+1)
+
+		self.var = self.var + 1 # the solver has been used once more
+		
+		''' Project Euler #28: Number spiral diagonals
+
+		So I saw how the 1*1 spiral has only 1. Then the 3*3 spiral additionally
+		has 3, 5, 7, 9. The 5*5 spiral has additionally 13, 17, 21, 25.
+ 
+		I noticed how these form a set of quadruplets -> {3, 5, 7, 9}, {13, 17, 21, 25},
+		{31, 37, 43, 49} ...
+
+		if we number the above sequence we can note the required "sum of diagonals" for N*N 
+		is (sum of all the terms of this sequence up to the rth term) plus 1.
+		N = 3, r should be 1. N = 5, r should be 2, and so you should see r is N//2 
+		(integer division or floor division in python).
+
+		OK now we can just find a general expression for this sequence and then apply summation.
+		but note we don't care about the individual elements in the quadruplets, we care about its sum.
+
+		The above logic will equally apply if we talk about the sum of all the terms of this sequence up to the rth term,
+		{3 + 5 + 7 + 9}, {13 + 17 + 21 + 25}, {31 + 37 + 43 + 49} ...
+
+		= {(1+1*2) + (1+2*2) + (1+3*2) + (1+4*2)}, 
+		  {(9+1*4) + (9+2*4) + (9+3*4) + (9+4*4)},  Note 9 is the last term of the previous quadruplet.
+		  {(25+1*6) + (25+2*6) + (25+3*6) + (25+4*6)} ...
+
+		  the sum in each term of the sequence can be written as,
+
+		= {4*(1) + 2*(1+2+3+4)}, 
+		  {4*(9) + 4*(1+2+3+4)},
+		  {4*(25) + 6*(1+2+3+4)} ... 
+
+		  where the terms 1, 9, 25, 49 follow the following sequence
+		  1, (1+4*2), (1+4*2+4*4), (1+4*2+4*4+4*6), ...
+
+		  the ith term will be 1 + 4(2 + 4 + 6 + ... 2(i-1)) = 1 + 8 * ((i-1)*i)/2
+		   = 1 + 4*(i-1)*i
+
+		   using this we can write the ith term of the main sequence as,
+
+		= {4*(1) + 2*(10)}, 
+		  {4*(9) + 4*(10)},
+		  {4*(25) + 6*(10)} ... 
+		  {4*(1 + 4*(i-1)*i) + 2*i*10} ...
+
+		  Coming to the solution for N*N spiral we need to sum this above sequence for r terms
+		  as discussed above,
+
+		  Sigma {4 + 16*(i*i) - 16*i + 2*i*10}
+		  = 4*r + (16/6)*r(r+1)(2r+1) - 8*r(r+1) + 10*r(r+1)
+
+		  Thus I solved this problem - http://i.imgur.com/FPYqFvi.png
+		'''
+
 # ========================================================================== END OF CLASS euler
 
 # Testing the solutions with Sample Output from HackerRank
